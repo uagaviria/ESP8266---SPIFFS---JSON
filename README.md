@@ -9,15 +9,12 @@ ver este video: https://youtu.be/qRiVBgZENwY
 ### Codigo de ejemplo
 - sketch
 ```cpp
-// Example: storing JSON configuration file in flash file system
+// Ejemplo: almacenamiento del archivo de configuración JSON en el sistema de archivos flash
 //
-// Uses ArduinoJson library by Benoit Blanchon.
+// Utiliza la biblioteca ArduinoJson de Benoit Blanchon.
 // https://github.com/bblanchon/ArduinoJson
 //
-// Created Aug 10, 2015 by Ivan Grokhotkov.
-//
-// This example code is in the public domain.
-
+// Este código de ejemplo está en el dominio público.
 #include <ArduinoJson.h>
 #include "FS.h"
 
