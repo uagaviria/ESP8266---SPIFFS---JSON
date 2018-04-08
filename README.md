@@ -1,9 +1,5 @@
-# WiFiManager
-ESP32&&ESP8266 WiFi Connection manager with fallback web configuration portal
-
-
-The configuration portal is of the captive variety, so on various devices it will present the configuration dialogue as soon as you connect to the created access point.
-
+# ESP8266 – SPIFFS + JSON
+Todos los ESP8266 tienen un “disco rígido” interno, llamado SPIFFS (SPI Flash File System), en el cual podemos leer y grabar archivos desde el código de Arduino o de forma manual. Justamente en este tutorial de IOT (internet de las cosas) vamos a ver cómo acceder al SPIFFS parar leer y guardar datos en un archivo Json (JavaScript Object Notation).
 First attempt at a library. Lots more changes and fixes to do. Contributions are welcome.
 
 ## Libray
