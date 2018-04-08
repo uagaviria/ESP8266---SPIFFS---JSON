@@ -106,11 +106,6 @@ void loop() {
 }
 ```
 
-- Initialize library, in your setup function add
-```cpp
-WiFiManager wifiManager;
-```
-
 - links para descarga de archivos
 ```cpp
 https://github.com/esp8266/arduino-esp8266fs-plugin
