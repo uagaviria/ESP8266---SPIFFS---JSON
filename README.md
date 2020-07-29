@@ -1,5 +1,5 @@
-# ESP8266 ñ SPIFFS + JSON
-Todos los ESP8266 tienen un ìdisco rÌgidoî interno, llamado SPIFFS (SPI Flash File System), en el cual podemos leer y grabar archivos desde el cÛdigo de Arduino o de forma manual. Justamente en este tutorial de IOT (internet de las cosas) vamos a ver cÛmo acceder al SPIFFS parar leer y guardar datos en un archivo Json (JavaScript Object Notation).
+# ESP8266 ‚Äì SPIFFS + JSON
+Todos los ESP8266 tienen un ‚Äúdisco r√≠gido‚Äù interno, llamado SPIFFS (SPI Flash File System), en el cual podemos leer y grabar archivos desde el c√≥digo de Arduino o de forma manual. Justamente en este tutorial de IOT (internet de las cosas) vamos a ver c√≥mo acceder al SPIFFS parar leer y guardar datos en un archivo Json (JavaScript Object Notation).
 First attempt at a library. Lots more changes and fixes to do. Contributions are welcome.
 
 ## Video
@@ -9,12 +9,12 @@ ver este video: https://youtu.be/qRiVBgZENwY
 ### Codigo de ejemplo
 - sketch
 ```cpp
-// Ejemplo: almacenamiento del archivo de configuraciÛn JSON en el sistema de archivos flash
+// Ejemplo: almacenamiento del archivo de configuraci√≥n JSON en el sistema de archivos flash
 //
 // Utiliza la biblioteca ArduinoJson de Benoit Blanchon.
 // https://github.com/bblanchon/ArduinoJson
 //
-// Este cÛdigo de ejemplo est· en el dominio p˙blico.
+// Este c√≥digo de ejemplo est√° en el dominio p√∫blico.
 
 #include <ArduinoJson.h>
 #include "FS.h"
@@ -35,24 +35,24 @@ bool loadConfig() {
   // Asigne un buffer para almacenar el contenido del archivo.
   std::unique_ptr<char[]> buf(new char[size]);
 
-   // No usamos String aquÌ porque la biblioteca ArduinoJson requiere la entrada
-†† // buffer para ser mutable Si no usas ArduinoJson, tambiÈn puedes
-†† // use configFile.readString en su lugar.
+   // No usamos String aqu√≠ porque la biblioteca ArduinoJson requiere la entrada
+¬†¬† // buffer para ser mutable Si no usas ArduinoJson, tambi√©n puedes
+¬†¬† // use configFile.readString en su lugar.
   configFile.readBytes(buf.get(), size);
 
-  StaticJsonBuffer<200> jsonBuffer;
-  JsonObject& json = jsonBuffer.parseObject(buf.get());
+  StaticJsonDocument<200> jsonBuffer;
+  auto error = deserializeJson(jsonBuffer, buf.get());
 
   if (!json.success()) {
-    Serial.println("Error al analizar el archivo de configuraciÛn");
+    Serial.println("Error al analizar el archivo de configuraci√≥n");
     return false;
   }
 
   const char* serverName = json["serverName"];
   const char* accessToken = json["accessToken"];
 
-   // La aplicaciÛn del mundo real almacenarÌa estos valores en algunas variables para
-†† // uso posterior.
+   // La aplicaci√≥n del mundo real almacenar√≠a estos valores en algunas variables para
+¬†¬† // uso posterior.
 
   Serial.print("Loaded serverName: ");
   Serial.println(serverName);
@@ -62,18 +62,17 @@ bool loadConfig() {
 }
 
 bool saveConfig() {
-  StaticJsonBuffer<200> jsonBuffer;
-  JsonObject& json = jsonBuffer.createObject();
-  json["serverName"] = "api.example.com";
-  json["accessToken"] = "128du9as8du12eoue8da98h123ueh9h98";
+  StaticJsonDocument<200> jsonBuffer;
+  jsonBuffer["serverName"] = "api.example.com";
+  jsonBuffer["accessToken"] = "128du9as8du12eoue8da98h123ueh9h98";
 
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {
-    Serial.println("Error al abrir el archivo de configuraciÛn para escribir");
+    Serial.println("Error al abrir el archivo de configuraci√≥n para escribir");
     return false;
   }
 
-  json.printTo(configFile);
+  serializeJson(jsonBuffer, configFile);
   return true;
 }
 
@@ -90,15 +89,15 @@ void setup() {
 
   // envia la configuracion a la memoria flash. descomentar si es necesario.
   //if (!saveConfig()) {
-  //  Serial.println("Error al guardar la configuraciÛn");
+  //  Serial.println("Error al guardar la configuraci√≥n");
   //} else {
   //  Serial.println("Configuracion guardada");
   //}
 
   if (!loadConfig()) {
-    Serial.println("Error al cargar la configuraciÛn");
+    Serial.println("Error al cargar la configuraci√≥n");
   } else {
-    Serial.println("ConfiguraciÛn cargada");
+    Serial.println("Configuraci√≥n cargada");
   }
 }
 
